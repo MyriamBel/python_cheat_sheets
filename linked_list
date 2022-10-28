@@ -1,0 +1,70 @@
+"""
+    # Список - это цепь элементов от первого до последнего. Нет первого элемента в списке - нет списка.
+    # Таким образом, минимальная длина списка - один элемент. Максимальная не ограничена.
+    # Можем создать элемент и список как отдельные классы, и при создании списка записывать элемент, а можем создать
+    # класс списка и в нем реализовать и элементы.
+
+    # Создаем первый элемент
+    # он пока что будет иметь значение None (data = None)
+    # следующий элемент будет пока что не определен
+"""
+
+
+class Node:
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def is_empty(self):
+        return self.head is None
+
+    def leng(self):
+        current = self.head
+        counter = 0
+        while current:
+            counter += 1
+            current = current.next
+        return counter
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.head is None:
+            raise StopIteration
+        item = self.head
+        self.head = self.head.next
+        return item
+
+    # Добавить элемент в начало списка
+    def add(self, value):
+        element = Node(value)
+        if self.is_empty():
+            self.head = element
+        else:
+            element.next = self.head
+            self.head = element
+
+    def append(self, value):
+        element = Node(value)
+        if self.is_empty():
+            self.head = element
+        else:
+            while self.head.next:
+                self.head = self.head.next
+            self.head.next = element
+
+
+listik = LinkedList()
+listik.append(2)
+listik.append(3)
+print(listik.leng())
+
+for i in listik:
+    print(i.data)
+    
